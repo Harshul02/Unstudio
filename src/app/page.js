@@ -1,5 +1,4 @@
-// import Image from 'next/image'
-
+import MyCanvas from "./components/MyCanvas";
 import Navbar from "./components/Navbar";
 
 export default function Home() {
@@ -7,6 +6,7 @@ export default function Home() {
     <div>
       {/* Hello */}
       <Navbar />
+      <MyCanvas />
     </div>
   )
 }
