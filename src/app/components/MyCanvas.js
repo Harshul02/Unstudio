@@ -109,19 +109,45 @@ const MyCanvas = () => {
     canvas.renderAll();
   };
 
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function (event) {
+      const imgObj = new Image();
+      imgObj.src = event.target.result;
+
+      imgObj.onload = function () {
+        const maxWidth = 200; // Set your desired maximum width
+        const maxHeight = 200; // Set your desired maximum height
+        const scaleFactor = Math.min(maxWidth / imgObj.width, maxHeight / imgObj.height);
+
+        const width = imgObj.width * scaleFactor;
+        const height = imgObj.height * scaleFactor;
+
+        const image = new fabric.Image(imgObj, {
+          scaleX: width / imgObj.width,
+          scaleY: height / imgObj.height,
+        });
+
+        canvas.add(image);
+      };
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div>
       <div style={{ width: "1200px", height: "50px", backgroundColor: "gray" }} className="flex flex-wrap items-center p-2">
       <div className="mr-4">
         <Select
         placeholder="Shape"
-          // defaultValue="Rectangle"
           style={{
             width: 120,
           }}
-          // onChange={(value) => {
-          //   handleShapeChange(value)
-          //   }}
             onSelect={(value)=>{
               handleShapeChange(value);
             }}
@@ -129,7 +155,6 @@ const MyCanvas = () => {
           <Option value="Rectangle">Rectangle</Option>
           <Option value="Circle">Circle</Option>
           <Option value="Triangle">Triangle</Option>
-          {/* <Option value="FreeHand">FreeHand</Option> */}
         </Select>
         </div>
         <div className="cursor-pointer bg-white rounded mr-4" onClick={handleObjectSelection}>
@@ -140,7 +165,6 @@ const MyCanvas = () => {
         <div className="cursor-pointer bg-white rounded mr-4" style={{height: "30px", width: "40px"}}>
         
         <input type="color" id="favcolor" value={color} onChange={(e)=>{
-          // console.log(e)
           setColor(e.target.value);
         }} style={{height: "30px", width: "40px"}} className="rounded"/>
         </div>
@@ -151,8 +175,10 @@ const MyCanvas = () => {
           <img src="https://www.svgrepo.com/show/529569/eraser.svg" alt="" style={{height: "30px", width: "40px"}}/>
         </div>
         <div className="cursor-pointer bg-white rounded mr-4" style={{ height: "30px", width: "40px" }} onClick={clearCanvas}>
-          {/* <span role="img" aria-label="clear">🗑️</span> */}
           Clear
+        </div>
+        <div className="cursor-pointer bg-white rounded mr-4" style={{ height: "30px", width: "100px" }}>
+          <input type="file" accept="image/*" onChange={handleImageUpload} />
         </div>
       </div>
       <canvas id="canvas"></canvas>
