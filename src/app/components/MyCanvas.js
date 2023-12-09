@@ -166,10 +166,10 @@ const MyCanvas = () => {
   }, [canvas]); 
 
   return (
-    <div className="flex">
-    <div>
-      <div style={{ width: "1200px", height: "50px", backgroundColor: "gray" }} className="flex flex-wrap items-center p-2">
-      <div className="mr-4">
+    <div className="flex flex-col items-center">
+      <div className="w-full bg-blue-500 p-3">
+        <div className="flex mb-2 flex-wrap">
+      <div className="mr-4 rounded">
         <Select
         placeholder="Shape"
           style={{
@@ -214,17 +214,16 @@ const MyCanvas = () => {
         <div className="cursor-pointer bg-white rounded mr-4" style={{ height: "30px", width: "40px" }} onClick={clearCanvas}>
           Clear
         </div>
-        <div className="cursor-pointer bg-white rounded mr-4" style={{ height: "30px", width: "100px" }}>
-          <input type="file" accept="image/*" onChange={handleImageUpload} />
-        </div>
-        <div className="cursor-pointer bg-white rounded ml-auto" style={{ height: "30px", width: "55px" }} onClick={deleteSelectedObject}>
+        <div className="cursor-pointer bg-white rounded mr-4" style={{ height: "30px", width: "55px" }} onClick={deleteSelectedObject}>
             Delete
           </div>
+        <div className="cursor-pointer bg-white rounded" style={{ height: "30px", width: "100px" }}>
+          <input type="file" accept="image/*" onChange={handleImageUpload}  className="rounded"/>
+        </div>
       </div>
-      <canvas id="canvas"></canvas>
+      <div className="flex flex-wrap">
+      <canvas id="canvas" className="w-full rounded"></canvas>
       </div>
-      <div className="container w-auto">
-      
       </div>
     </div>
   );
