@@ -3,8 +3,6 @@
 import { useEffect, useState } from "react";
 import { fabric } from "fabric";
 import { Select } from "antd";
-import * as THREE from 'three';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader';
 
 
 
@@ -13,6 +11,8 @@ const { Option } = Select;
 const MyCanvas = () => {
   const [canvas, setCanvas] = useState(null);
   const [color, setColor] = useState('#ABCDEF');
+  const [brushWidth, setBrushWidth] = useState(5);
+
 
   useEffect(() => {
     const fibreCanvas = new fabric.Canvas("canvas", {
@@ -91,7 +91,7 @@ const MyCanvas = () => {
   const enableFreeDrawing = () => {
     canvas.isDrawingMode = true;
     canvas.freeDrawingBrush.color = color;
-    canvas.freeDrawingBrush.width = 5;
+    canvas.freeDrawingBrush.width = brushWidth;
   };
 
   const handleObjectSelection = () => {
@@ -103,7 +103,7 @@ const MyCanvas = () => {
     // setIsEraser(true);
     canvas.isDrawingMode = true;
     canvas.freeDrawingBrush.color = "#f0f0f0"; 
-    canvas.freeDrawingBrush.width = 10; 
+    canvas.freeDrawingBrush.width = brushWidth; 
   };
 
   const clearCanvas = () => {
@@ -198,6 +198,16 @@ const MyCanvas = () => {
         <div className="cursor-pointer bg-white rounded mr-4" style={{height: "30px", width: "40px"}} onClick={enableFreeDrawing} >
           <img src="https://www.svgrepo.com/show/288167/drawing-draw.svg" alt="" style={{height: "30px", width: "40px"}}/>
         </div>
+        <div className="cursor-pointer rounded mr-4">
+            Brush Width:
+            <input
+            className="bg-white rounded"
+              type="number"
+              value={brushWidth}
+              onChange={(e) => setBrushWidth(parseInt(e.target.value, 10))}
+              style={{ width: "40px", marginLeft: "5px" }}
+            />
+          </div>
         <div className="cursor-pointer bg-white rounded mr-4" style={{height: "30px", width: "40px"}} onClick={enableEraser} >
           <img src="https://www.svgrepo.com/show/529569/eraser.svg" alt="" style={{height: "30px", width: "40px"}}/>
         </div>
