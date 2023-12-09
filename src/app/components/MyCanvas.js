@@ -3,6 +3,9 @@
 import { useEffect, useState } from "react";
 import { fabric } from "fabric";
 import { Select } from "antd";
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader';
+
 
 
 const { Option } = Select;
@@ -139,7 +142,31 @@ const MyCanvas = () => {
     }
   };
 
+  const deleteSelectedObject = () => {
+    const activeObject = canvas.getActiveObject();
+    if (activeObject) {
+      canvas.remove(activeObject);
+      canvas.renderAll();
+    }
+  };
+
+  useEffect(() => {
+
+    const handleKeyDown = (e) => {
+      if (e.code === 'Delete' || e.keyCode === 46) {
+        deleteSelectedObject();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [canvas]); 
+
   return (
+    <div className="flex">
     <div>
       <div style={{ width: "1200px", height: "50px", backgroundColor: "gray" }} className="flex flex-wrap items-center p-2">
       <div className="mr-4">
@@ -180,8 +207,15 @@ const MyCanvas = () => {
         <div className="cursor-pointer bg-white rounded mr-4" style={{ height: "30px", width: "100px" }}>
           <input type="file" accept="image/*" onChange={handleImageUpload} />
         </div>
+        <div className="cursor-pointer bg-white rounded ml-auto" style={{ height: "30px", width: "55px" }} onClick={deleteSelectedObject}>
+            Delete
+          </div>
       </div>
       <canvas id="canvas"></canvas>
+      </div>
+      <div className="container w-auto">
+      
+      </div>
     </div>
   );
 };
