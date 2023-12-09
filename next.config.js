@@ -12,7 +12,7 @@ const nextConfig = {
       // config.infrastructureLogging = { debug: /PackFileCache/ };
       return config;
     },
-    outDir: 'build',
+    distDir: 'build',
   };
   
   module.exports = nextConfig;
