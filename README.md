@@ -28,7 +28,7 @@ To run the project locally, follow these steps:
 
 ```bash
 # Clone the repository
-git clone [https://github.com/your-username/your-project.git](https://github.com/Harshul02/Unstudio.git)
+git clone https://github.com/Harshul02/Unstudio.git
 
 # Navigate to the project directory
 cd Unstudio
